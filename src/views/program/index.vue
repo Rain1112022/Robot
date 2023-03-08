@@ -12,11 +12,6 @@
         <h3>状态监控</h3>
         <div  style="width:100%; height: calc((100% - 84px)); border: 1px solid #dcdfe6; padding: 10px;">
           <monitor :runCount="data.runCount" :code="data.code" :playCode="data.playCode"/>
-          <!-- <p>{{ "控制语句输出：" }}</p>
-          <code>{{data.code}}</code>
-          <p>{{ "处理控制语句:" }}</p>
-          <div>{{ data.playCode }}</div> -->
-          
           </div>
       </div>
     </el-col>

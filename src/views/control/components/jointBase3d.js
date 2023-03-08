@@ -226,7 +226,7 @@ export default class jointBase3d {
     //角度 转 弧度 THREE.MathUtils.degToRad(deg)
     //弧度 转 角度 THREE.MathUtils.radToDeg (rad)
     setRobotRotation(clickStep, name, direction) {
-        console.log("clickStep, name, direction", clickStep, name, direction); 
+        // console.log("clickStep, name, direction", clickStep, name, direction); 
 
         if (typeof clickStep === 'number') { 
             this[name].rotation[direction] = direction == 'x' ?  this[name].rotation[direction] - THREE.MathUtils.degToRad(clickStep) : this[name].rotation[direction] + THREE.MathUtils.degToRad(clickStep)

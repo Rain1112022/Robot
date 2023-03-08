@@ -28,7 +28,7 @@ class CustomCategory extends Blockly.ToolboxCategory {
   }
   createIconDom_() {
     const iconImg = document.createElement('img');
-    iconImg.src = 'src/assets/image/Icon_subprogram.png';
+    iconImg.src = '/src/assets/image/Icon_subprogram.png';
     iconImg.alt = 'Blockly Logo';
     iconImg.width = '25';
     iconImg.height = '25';

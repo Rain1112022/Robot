@@ -118,7 +118,7 @@ watch(
     })
   }
 )
-const clickControl = _throttle((i, val, flag) => {
+const clickControl = (i, val, flag) => {
   let arrowTemp = document.getElementById(val)
   arrowTemp.style.opacity = 0.5
   setTimeout(() => {
@@ -130,7 +130,7 @@ const clickControl = _throttle((i, val, flag) => {
   data.isSuccess = false
   let params = { movj: data.reqMoveArr }
   api.tcpGesture(params).then((res) => {
-    console.log("tcp姿态步进", res)
+    // console.log("tcp姿态步进", res)
     if (res.STATUS == 'SUCCESS') {
       data.isSuccess = true
       // 响应成功，返回成功后的关节信息，然后把关节信息（resMoveArr）传入函数，使模型转动
@@ -143,12 +143,14 @@ const clickControl = _throttle((i, val, flag) => {
         type: 'success',
         duration: 1000,
       })
+    }else if(res.STATUS == 'FAILED'){
+      // console.log('FAILED');
     }
   }).catch((error) => {
     console.log(error);
   })
 
-}, 2000, 1)
+}
 
 
 
