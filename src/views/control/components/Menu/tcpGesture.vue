@@ -51,6 +51,7 @@
 import { ref,reactive, onMounted,computed,toRaw,inject,watch } from "vue";
 import { ElMessage } from 'element-plus'
 import * as api from '@/api/control.js'
+import {_throttle} from '@/utils/util.js'
 import { useStore } from 'vuex';
 const store = useStore();
 const data = reactive({
@@ -117,29 +118,28 @@ watch(
     })
   }
 )
-
-function clickControl(i, val, flag) {
+const clickControl = _throttle((i, val, flag) => {
   let arrowTemp = document.getElementById(val)
   arrowTemp.style.opacity = 0.5
-  setTimeout(()=>{
+  setTimeout(() => {
     arrowTemp.style.opacity = 0
-  },100)
+  }, 100)
   data.reqMoveArr[i] = flag ? ++data.reqMoveArr[i] : --data.reqMoveArr[i]
- 
-  if(!data.isSuccess) return;
+
+  if (!data.isSuccess) return;
   data.isSuccess = false
-  let params = {movj: data.reqMoveArr}
+  let params = { movj: data.reqMoveArr }
   api.tcpGesture(params).then((res) => {
     console.log("tcp姿态步进", res)
     if (res.STATUS == 'SUCCESS') {
       data.isSuccess = true
-       // 响应成功，返回成功后的关节信息，然后把关节信息（resMoveArr）传入函数，使模型转动
-      emit("setRotation", flag ? data.resMoveArr[i].num : -data.resMoveArr[i].num, data.resMoveArr[i].joint, data.resMoveArr[i].direction );
+      // 响应成功，返回成功后的关节信息，然后把关节信息（resMoveArr）传入函数，使模型转动
+      emit("setRotation", flag ? data.resMoveArr[i].num : -data.resMoveArr[i].num, data.resMoveArr[i].joint, data.resMoveArr[i].direction);
 
       // data.angleArr[i].num = flag ?  ++data.angleArr[i].num :  --data.angleArr[i].num
       //处理响应的关节位置信息
       ElMessage({
-        message: `${ data.angleArr[i].name}运动完成`,
+        message: `${data.angleArr[i].name}运动完成`,
         type: 'success',
         duration: 1000,
       })
@@ -147,8 +147,10 @@ function clickControl(i, val, flag) {
   }).catch((error) => {
     console.log(error);
   })
- 
-}
+
+}, 2000, 1)
+
+
 
 // onMounted(async () => {
 //   // console.log("tcp姿态控制");

@@ -37,6 +37,7 @@
 import { ref, reactive,toRaw, onMounted,computed,inject,watch} from "vue";
 import { ElMessage } from 'element-plus'
 import * as api from '@/api/control.js'
+import {_throttle} from '@/utils/util.js'
 import { useStore } from 'vuex';
 const store = useStore();
 const data = reactive({
@@ -105,10 +106,9 @@ onMounted(async () => {
   // console.log(toRaw(data.reqMoveArr));
   
 });
-
-function clickControl(i, flag) {
-  //发送http请求时，websocket回中断，所以重新建立
-  if (flag) {
+const clickControl = _throttle((i, flag)=> {
+//发送http请求时，websocket回中断，所以重新建立
+if (flag) {
     let arrowLeft = document.getElementById('arrow-left' + i)
     arrowLeft.style.opacity = 0.5
     ++data.reqMoveArr[i]
@@ -123,15 +123,11 @@ function clickControl(i, flag) {
       arrowRight.style.opacity = 0
     }, 100)
   }
-  
-  if (!data.isSuccess) return;
-  data.isSuccess = false
  
   let params = {movj: data.reqMoveArr}
   api.jointPosition(params).then((res) => {
     console.log("joint位置步进", res)
     if (res.STATUS == 'SUCCESS') {
-      data.isSuccess = true
       emit("setRotation", flag ? data.clickStep : -data.clickStep, data.jointArr[i].joint, data.jointArr[i].direction);
       store.dispatch("stateInfo/getWebsocketLinkFlag",false)
       // data.jointArr[i].num = flag ? ++data.jointArr[i].num : --data.jointArr[i].num
@@ -140,11 +136,14 @@ function clickControl(i, flag) {
         type: 'success',
         duration: 1000,
       })
+    }else if(res.STATUS == 'FAILED'){
+      console.log('FAILED');
     }
   }).catch((error) => {
     console.log(error);
   })
-}
+},2000,1)
+
 
 </script>
 

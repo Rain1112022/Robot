@@ -48,6 +48,7 @@
 <script setup>
 import { ref, reactive, toRaw, onMounted, computed, inject, watch } from "vue";
 import { ElMessage } from 'element-plus'
+import {_throttle} from '@/utils/util.js'
 import * as api from '@/api/control.js'
 import { useStore } from 'vuex';
 const store = useStore();
@@ -118,8 +119,7 @@ watch(
   }
 )
 
-function clickControl(i, val, flag) {
-  // console.log("i, val, flag",i, val, flag); //2 arrow-up-z true
+const clickControl = _throttle((i, val, flag) => {
   let arrowTemp = document.getElementById(val)
   arrowTemp.style.opacity = 0.5
   setTimeout(() => {
@@ -147,9 +147,7 @@ function clickControl(i, val, flag) {
   }).catch((error) => {
     console.log(error);
   })
-
-  // emit("setRotation", flag ? data.resMoveArr[i].num : -data.resMoveArr[i].num, data.resMoveArr[i].joint, data.resMoveArr[i].direction );
-}
+}, 2000, 1)
 
 // onMounted(async () => {
 //  data.CartInfo = computed(() => {
