@@ -1,8 +1,7 @@
 import { toRaw,computed,reactive,watch } from 'vue'
-import SocketService from './websocket'  //ws类
-import store from '@/store'  //vuex
+import SocketService from '@/config/websocket/websocket.js'  //ws类
+import store from './store'  //vuex
 import { ElMessage } from 'element-plus'
-import {deepCopy} from '@/utils/util.js'
 
 const data = reactive({
   hasToken: null,   //是否登录/认证
@@ -10,7 +9,9 @@ const data = reactive({
   websocketLinkFlag:null,  //ws连接标志
   sendDataParams: {},  //ws发送路径目标点的参数
   temParams:null,   // 接收sendDataParams
-  count:0, //运行结束否（当返回的运行标志位RunningFlag == 'FALSE'时，count变成0，RunningFlag == 'TRUE'时变成1）
+  count:0,
+  isRunning:false, //是在运行还是暂停
+  playCode:[],//操作指令
 })
 //ws连接配置
 const config = {
@@ -24,6 +25,10 @@ const config = {
       data.temParams = null
       // console.log("temParams",toRaw(params));
       ws.send(JSON.stringify(params));
+    }
+    //isRunning如果为true说明此时点击运行按钮， 需要send运动指令
+    //isRunning如果为false说明此时没有运动或者运动暂停，如果是暂停， 则需要send告知
+    if(data.isRunning){
     }
     //接下来判断resInfo的数据，不同响应数据代表不同的状况
     const resInfo = JSON.parse(val)
@@ -57,7 +62,7 @@ const config = {
     //3，resInfo.Status：建立成功且send信息,表示是否收到合格的send信息；
     else if(resInfo.STATUS){
       console.log("resInfo.STATUS", resInfo.STATUS);
-      if(resInfo.STATUS == "FAIL") {
+      if(resInfo.STATUS == "FAILED") {
         // ws.close()
         ElMessage({
           message: "数据验证错误",
@@ -86,6 +91,12 @@ data.websocketLinkFlag = computed(() =>
 data.sendDataParams = computed(() =>
   store.state.stateInfo.sendDataParams
 )
+data.isRunning = computed(() => {
+  return  store.state.codeOperate.isRunning
+})
+data.playCode = computed(() => {
+  return store.state.codeOperate.playCode
+})
 
 //若token存在，则创建ws实例
 if (data.hasToken) {
@@ -120,3 +131,29 @@ watch(
   }
 )  
 
+//监听编程模块的isRunning,如果为true ，send 运行；如果为false ，send停止
+watch(
+  () => data.isRunning,
+  (newVal, oldVal) => {
+    if (newVal) {
+      
+    }
+  }
+)  
+
+//监听编程模块的playCode，如果内容不为空，逐次send命令，,此时只能是编程模块用ws
+watch(
+  () => data.playCode,
+  (newV, oldV) => {
+    if(newV.length) {
+      data.socketLink = null
+      data.socketLink= new SocketService(programConfig)
+    }
+  }
+)
+
+// 监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接
+// window.onbeforeunload = function () {
+//   console.log("监听窗口关闭事件,主动去关闭websocket连接");
+//   data.socketLink = null
+// }  

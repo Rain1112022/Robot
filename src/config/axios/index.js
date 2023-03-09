@@ -36,7 +36,7 @@ request.interceptors.response.use(
     }
 },
 (error)=> {
-  console.log(error,"error响应异常"); 
+     console.log("error响应异常"); 
 }
 )
 export default request;

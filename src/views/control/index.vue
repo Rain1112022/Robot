@@ -61,7 +61,7 @@ onMounted(async () => {
     data.initState = computed(()=> {
       return store.state.stateInfo.JointInfo
     })
-    // console.log("机械臂同步",toRaw(data.initState));
+    console.log("机械臂同步",toRaw(data.initState));
     data.base3d = new jointBase3d(document.querySelector('canvas.Base3d'), toRaw(data.initState) || [])
 })
 

@@ -1,9 +1,11 @@
 import vue from '@vitejs/plugin-vue';
 import path from 'path';
-import { defineConfig } from 'vite';
+import { defineConfig,loadEnv  } from 'vite';
 
+// const env = loadEnv("mode",process.cwd());
 export default defineConfig({
   sourcemap: true,
+  base :'/backup/',
   plugins: [
     vue({
       template: {
@@ -33,7 +35,7 @@ export default defineConfig({
     minify: 'terser',
     outDir:  'dist',
   },
-
+  
   server: {
     // host: '0.0.0.0',
     // port: 8000,
@@ -50,3 +52,5 @@ export default defineConfig({
   },
   
 });
+
+

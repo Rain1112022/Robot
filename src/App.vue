@@ -21,8 +21,6 @@ const store = useStore();
 
 onMounted(() => {
   // console.log("App.vue mounted");
-  // const provideData = inject("globalWebsocket")
-  // console.log(provideData );  //object
   // console.log("关节角度",toRaw(store.state.stateInfo.JointInfo));
         // console.log("末端状态",toRaw(store.state.stateInfo.CartInfo));
 })

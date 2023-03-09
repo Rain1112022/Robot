@@ -6,6 +6,8 @@ export default class SocketService{
     this.config = config; 
     this.socketLink(config)
   }
+
+  //心跳检测
    
   socketLink(config) {
     // console.log(config);

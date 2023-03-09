@@ -16,14 +16,14 @@
       <el-col :span="6">{{ "用时:" }}</el-col>
       <el-col :span="6">{{ data.time + "ms" }}</el-col>
     </el-row>
-    <!-- <el-row>
+    <el-row>
       <p>{{ "控制语句输出：" }}</p>
       <code>{{ code }}</code>
     </el-row>
     <el-row>
       <p>{{ "处理控制语句:" }}</p>
       <div>{{ playCode }}</div>
-    </el-row> -->
+    </el-row>
   </div>
 </template>
 

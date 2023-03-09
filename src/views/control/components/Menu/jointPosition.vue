@@ -92,7 +92,7 @@ watch(
   }
 )
 
-onMounted(() => {
+onMounted(async () => {
   // console.log("关节位置控制");
   // data.JointInfo = computed(() => {
   //   return store.state.stateInfo.JointInfo
@@ -107,11 +107,11 @@ onMounted(() => {
   
 });
 
-const clickControl =  (i, flag)=> {
+const clickControl = _throttle((i, flag)=> {
 //发送http请求时，websocket回中断，所以重新建立
 if (flag) {
-    let arrowLeft = document.getElementById('arrow-left' + i);
-    arrowLeft.style.opacity = 0.5;
+    let arrowLeft = document.getElementById('arrow-left' + i)
+    arrowLeft.style.opacity = 0.5
     ++data.reqMoveArr[i]
     setTimeout(function () {
       arrowLeft.style.opacity = 0
@@ -124,9 +124,11 @@ if (flag) {
       arrowRight.style.opacity = 0
     }, 100)
   }
+ 
   let params = {movj: data.reqMoveArr}
+  // console.log(toRaw(params));
   api.jointPosition(params).then((res) => {
-    // console.log("joint位置步进", res)
+    console.log("joint位置步进", res)
     if (res.STATUS == 'SUCCESS') {
       emit("setRotation", flag ? data.clickStep : -data.clickStep, data.jointArr[i].joint, data.jointArr[i].direction);
       store.dispatch("stateInfo/getWebsocketLinkFlag",false)
@@ -137,13 +139,12 @@ if (flag) {
         duration: 1000,
       })
     }else if(res.STATUS == 'FAILED'){
-      // console.log('FAILED');
+      return
     }
   }).catch((error) => {
     console.log(error);
   })
-}
-
+},2000,1)
 
 </script>
 

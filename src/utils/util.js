@@ -3,11 +3,10 @@ import { ElMessage } from 'element-plus'
 //时间戳和定时器区别：时间戳版本的函数触发是在时间段内开始的时候，而定时器版的函数触发是在时间段内结束的时候
 
 export function _throttle(fn,interval,type) {
-  // console.log(fn,interval,type);
   if(type === 1){
-    var previous = 0;
+    let previous = 0;
   }else if(type === 2){
-    var timeout;
+    let timeout;
   }
   var interval = interval || 200;
   return function () {
@@ -263,4 +262,3 @@ export function wsSendData(data) {
     return fn(arr)
   }
 };
-

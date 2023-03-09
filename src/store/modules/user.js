@@ -22,11 +22,11 @@ const actions = {
     // console.log(userInfo);  //{ passwd: 123456 }
     return new Promise((resolve, reject) => {
       api.Login(userInfo).then((response) => {
-        // console.log("登录结果", response);//{ login: "success" }
-        commit('SET_TOKEN', response.login); //success
+        // console.log("登录结果", response);//{ LOGIN: "SUCCESS" }
+        commit('SET_TOKEN', response.LOGIN); 
         commit('SET_INFO', userInfo)
         sessionStorage.setItem("userInfo", JSON.stringify(userInfo))
-        sessionStorage.setItem("token",response.login)
+        sessionStorage.setItem("token",response.LOGIN)
         resolve()
       }).catch(error => {
         reject(error)

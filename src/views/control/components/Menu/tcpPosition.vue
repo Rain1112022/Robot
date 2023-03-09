@@ -48,8 +48,8 @@
 <script setup>
 import { ref, reactive, toRaw, onMounted, computed, inject, watch } from "vue";
 import { ElMessage } from 'element-plus'
-import {_throttle} from '@/utils/util.js'
 import * as api from '@/api/control.js'
+import {_throttle} from '@/utils/util.js'
 import { useStore } from 'vuex';
 const store = useStore();
 const data = reactive({
@@ -119,20 +119,18 @@ watch(
   }
 )
 
-const clickControl = (i, val, flag) => {
-  let arrowTemp = document.getElementById(val)
+const clickControl = _throttle((i, val, flag)=> {
+ // console.log("i, val, flag",i, val, flag); //2 arrow-up-z true
+ let arrowTemp = document.getElementById(val)
   arrowTemp.style.opacity = 0.5
   setTimeout(() => {
     arrowTemp.style.opacity = 0
   }, 100)
   data.reqMoveArr[i] = flag ? ++data.reqMoveArr[i] : --data.reqMoveArr[i]
-  if (!data.isSuccess) return;
-  data.isSuccess = false
   let params = { movj: data.reqMoveArr }
   api.tcpPosition(params).then((res) => {
-    // console.log("tcp位置步进", res)
+    console.log("tcp位置步进", res)
     if (res.STATUS == 'SUCCESS') {
-      data.isSuccess = true
       // 响应成功，返回成功后的关节信息，然后把关节信息（resMoveArr）传入函数，使模型转动
       emit("setRotation", flag ? data.resMoveArr[i].num : -data.resMoveArr[i].num, data.resMoveArr[i].joint, data.resMoveArr[i].direction);
       // data.axleArr[i].num = flag ?  data.axleArr[i].num++ :  data.axleArr[i].num--
@@ -147,7 +145,8 @@ const clickControl = (i, val, flag) => {
   }).catch((error) => {
     console.log(error);
   })
-}
+}, 2000, 1)
+
 
 // onMounted(async () => {
 //  data.CartInfo = computed(() => {
