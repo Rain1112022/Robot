@@ -1,0 +1,284 @@
+{
+  "kind": "categoryToolbox",
+  "contents": [
+    {
+      "kind": "category",
+      "name": "动作",
+      "categorystyle": "procedure_category",
+      "contents" :[{
+        "kind": "block",
+        "type": "reset"
+      },
+      {
+        "kind": "block",
+        "type": "joint_move",
+        "inputs": {
+          "J1": {
+            "block": {
+              "type": "math_number",
+              "fields": {
+                "NUM": -40
+              }
+            }
+          },
+          "J2": {
+            "block": {
+              "type": "math_number",
+              "fields": {
+                "NUM": 10
+              }
+            }
+          },
+          "B2": {
+            "block": {
+              "type": "math_number",
+              "fields": {
+                "NUM": -40
+              }
+            }
+          },
+          "J5": {
+            "block": {
+              "type": "math_number",
+              "fields": {
+                "NUM": 30
+              }
+            }
+          },
+          "J6": {
+            "block": {
+              "type": "math_number",
+              "fields": {
+                "NUM": -90
+              }
+            }
+          },
+          "T1": {
+            "block": {
+              "type": "math_number",
+              "fields": {
+                "NUM": 30
+              }
+            }
+          }
+        }
+      },
+      {
+        "kind": "block",
+        "type": "tcp_move",
+        "inputs": {
+          "X": {
+            "block": {
+              "type": "math_number",
+              "fields": {
+                "NUM": -624
+              }
+            }
+          },
+          "Y": {
+            "block": {
+              "type": "math_number",
+              "fields": {
+                "NUM": -201
+              }
+            }
+          },
+          "Z": {
+            "block": {
+              "type": "math_number",
+              "fields": {
+                "NUM": 900
+              }
+            }
+          },
+          "Rx": {
+            "block": {
+              "type": "math_number",
+              "fields": {
+                "NUM": 30
+              }
+            }
+          },
+          "Ry": {
+            "block": {
+              "type": "math_number",
+              "fields": {
+                "NUM": -170
+              }
+            }
+          },
+          "Rz": {
+            "block": {
+              "type": "math_number",
+              "fields": {
+                "NUM": -11
+              }
+            }
+          }
+        }
+      },
+      {
+        "kind": "block",
+        "type": "terminal_position",
+        "disabled": "true",
+        "inputs": {
+          "position": {
+            "block": {
+              "type": "math_number",
+              "fields": {
+                "NUM": 100
+              }
+            }
+          }
+        }
+      },
+      {
+        "kind": "block",
+        "type": "single_joint_revolve",
+        "disabled": "true",
+        "inputs": {
+          "jointAngle": {
+            "block": {
+              "type": "math_number",
+              "fields": {
+                "NUM": 10
+              }
+            }
+          }
+        }
+      },
+      {
+        "kind": "block",
+        "type": "option_move"
+      },
+      {
+        "kind": "block",
+        "type": "move_to_point"
+      }
+     ]
+    },
+    {
+      "kind": "category",
+      "name": "设置",
+      "categorystyle": "logic_category",
+      "contents": [
+        {
+          "kind": "block",
+          "type": "speed",
+          "disabled": "true"
+        },
+        {
+          "kind": "block",
+          "type": "delay_send",
+          "disabled": "true",
+          "inputs": {
+            "delaySend": {
+              "block": {
+                "type": "math_number",
+                "fields": {
+                  "NUM": 5
+                }
+              }
+            }
+          }
+        },
+        {
+          "kind": "block",
+          "type": "delay_execution",
+          "disabled": "true",
+          "inputs": {
+            "delayExecution": {
+              "block": {
+                "type": "math_number",
+                "fields": {
+                  "NUM": 3
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "kind": "category",
+      "name": "循环",
+      "categorystyle": "loop_category",
+      "contents": [
+        {
+          "kind": "block",
+          "type": "loop",
+          "inputs": {
+            "count": {
+              "block": {
+                "type": "math_number",
+                "fields": {
+                  "NUM": 10
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "kind": "category",
+      "name": "输入",
+      "categorystyle": "text_category",
+      "contents": [
+        {
+          "kind": "block",
+          "type": "math_number"
+        },
+        {
+          "kind": "block",
+          "type": "point_option"
+          
+        }
+        
+      ]
+    },
+    {
+      "kind": "category",
+      "name": "变量",
+      "categorystyle": "variable_category",
+      "disabled": "true",
+      "custom": "VARIABLE"
+    },
+    {
+      "kind": "category",
+      "name": "弹框",
+      "categorystyle": "list_category",
+      "contents": [
+        {
+          "kind": "block",
+          "type": "text_print",
+          "inputs": {
+            "TEXT": {
+              "block": {
+                "type": "text",
+                "fields": {
+                  "TEXT": "\"Beware the Jabberwock, my son!"
+                }
+              }
+            }
+          },
+          "next": {
+            "block": {
+              "type": "text_print",
+              "inputs": {
+                "TEXT": {
+                  "block": {
+                    "type": "text",
+                    "fields": {
+                      "TEXT": "  The jaws that bite, the claws that catch!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

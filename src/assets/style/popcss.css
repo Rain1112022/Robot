@@ -1,0 +1,22 @@
+/* .el-popper.is-pure.el-dropdown__popper.navigation-dropdown{
+  background-color: #020a20;
+  
+} */
+.el-dropdown-menu.el-dropdown-menu--default{
+  background-color: #2E3946;
+}
+/* .el-popper__arrow{
+  background-color: #020a20;
+} */
+.el-popper.is-light .el-popper__arrow::before{
+  background-color: #2E3946;
+}
+
+.el-dialog .el-dialog__header {
+  margin-right: 0 ;
+  background-color:rgba(0,0,0,0.2);
+}
+
+/* .el-dialog .el-dialog__footer {
+  border-top: 1px solid  #333;
+} */
